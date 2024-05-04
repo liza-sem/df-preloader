@@ -23,7 +23,7 @@
         removePreloader();  // Try to remove the preloader
     });
 
-   $('a:not([data-folder-id])').on('click', function(event) {
+   $('a:not(a [data-folder-id])').on('click', function(event) {
         // Prevent the default behavior (navigation) from occurring immediately
         event.preventDefault();
 
