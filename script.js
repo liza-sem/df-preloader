@@ -4,10 +4,8 @@ $(document).ready(function() {
 
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
-            $('.overlay').css({'opacity': '0'});
-            setTimeout(function() {
-                $('.overlay').css({'visibility': 'hidden'});
-            }, 300); // Wait for the opacity transition to finish before hiding
+            $('.overlay').css('opacity', '0');
+            $('#loading-animation').css('display', 'none');
         }
     }
 
@@ -30,16 +28,13 @@ $(document).ready(function() {
             return; // Do nothing or return after a different logic
         }
 
+        // Prevent default behavior if no 'data-folder-id' and not a control link
         event.preventDefault();
         var href = $(this).attr('href');
-
-        $('.overlay').css({'visibility': 'visible', 'opacity': '0'}); // Ensure the element is visible and set opacity to 0
-        setTimeout(function() {
-            $('.overlay').css('opacity', '1'); // Then transition to full opacity
-        }, 10); // Short delay to ensure the CSS property is applied
+        $('.overlay').css('opacity', '1');
 
         setTimeout(function() {
             window.location.href = href;
-        }, 300); // Delay the navigation
+        }, 300); // 300 milliseconds = 0.3 seconds
     });
 });
