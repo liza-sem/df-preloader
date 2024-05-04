@@ -23,20 +23,20 @@
         removePreloader();  // Try to remove the preloader
     });
 
-   $('a:not([data-folder-id])').on('click', function(event) {
-        // Prevent the default behavior (navigation) from occurring immediately
-        event.preventDefault();
+$('a').on('click', function(event) {
+    var hasFolderId = $(this).attr('data-folder-id');
+    if (hasFolderId) {
+        // Handle links with data-folder-id differently or do nothing
+        return; // Do nothing or return after a different logic
+    }
 
-        // Capture the link's href attribute
-        var href = $(this).attr('href');
+    event.preventDefault();
+    var href = $(this).attr('href');
+    $('.overlay').css('opacity', '1');
 
-        // Show the overlay
-        $('.overlay').css('opacity', '1');
+    setTimeout(function() {
+        window.location.href = href;
+    }, 300); // 300 milliseconds = 0.3 seconds
+});
 
-        // Wait for a second
-        setTimeout(function() {
-            // After a second, proceed with the navigation
-            window.location.href = href;
-        }, 300); // 1000 milliseconds = 1 second
-    });
 });
