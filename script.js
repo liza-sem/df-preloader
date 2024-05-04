@@ -1,42 +1,45 @@
-<!-- PRELOADER -->
-  $(document).ready(function() {
+$(document).ready(function() {
     var pageLoaded = false;
-    // Flag to check if the timeout has finished
     var timeoutComplete = false;
 
-    // Function to remove the preloader
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
-            $('.overlay').css('opacity', '0');
-            $('#loading-animation').css('display', 'none');
+            $('.overlay').css({'opacity': '0'});
+            setTimeout(function() {
+                $('.overlay').css({'visibility': 'hidden'});
+            }, 300); // Wait for the opacity transition to finish before hiding
         }
     }
-    // Set a timeout for 2 seconds
+
     setTimeout(function() {
         timeoutComplete = true;
         removePreloader();  // Try to remove the preloader
-    }, 3000); // 2000 milliseconds = 2 seconds
+    }, 3000); // 3000 milliseconds = 3 seconds
 
-    // Listen for the window's load event
     $(window).on('load', function() {
         pageLoaded = true;
         removePreloader();  // Try to remove the preloader
     });
 
-$('a').on('click', function(event) {
-    var hasFolderId = $(this).attr('data-folder-id');
-    if (hasFolderId) {
-        // Handle links with data-folder-id differently or do nothing
-        return; // Do nothing or return after a different logic
-    }
+    $('a').on('click', function(event) {
+        var hasFolderId = $(this).attr('data-folder-id');
+        var isControlLink = $(this).hasClass('header-menu-controls-control');
 
-    event.preventDefault();
-    var href = $(this).attr('href');
-    $('.overlay').css('opacity', '1');
+        if (hasFolderId || isControlLink) {
+            // If the link has 'data-folder-id' or the specified class, do nothing
+            return; // Do nothing or return after a different logic
+        }
 
-    setTimeout(function() {
-        window.location.href = href;
-    }, 300); // 300 milliseconds = 0.3 seconds
-});
+        event.preventDefault();
+        var href = $(this).attr('href');
 
+        $('.overlay').css({'visibility': 'visible', 'opacity': '0'}); // Ensure the element is visible and set opacity to 0
+        setTimeout(function() {
+            $('.overlay').css('opacity', '1'); // Then transition to full opacity
+        }, 10); // Short delay to ensure the CSS property is applied
+
+        setTimeout(function() {
+            window.location.href = href;
+        }, 300); // Delay the navigation
+    });
 });
