@@ -5,7 +5,7 @@ $(document).ready(function() {
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
             $('.overlay').animate({ opacity: 0 }, 500, function() {
-                $(this).hide();  // Hide the overlay completely after fading out
+                $(this).hide();  // Ensures that overlay is hidden after fade-out
             });
         }
     }
@@ -31,7 +31,10 @@ $(document).ready(function() {
         event.preventDefault();
         var href = $(this).attr('href');
 
-        $('.overlay').animate({ opacity: 1 }, 500, function() {
+        // Prevent further clicks
+        $('a').css('pointer-events', 'none');
+
+        $('.overlay').css('opacity', '0').show().animate({ opacity: 1 }, 500, function() {
             setTimeout(function() {
                 window.location.href = href;  // Redirect after a slight delay
             }, 300); // 300 milliseconds = 0.3 seconds
