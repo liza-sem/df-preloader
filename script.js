@@ -4,8 +4,9 @@ $(document).ready(function() {
 
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
-            $('.overlay').css('opacity', '0');
-            
+            $('.overlay').animate({ opacity: 0 }, 500, function() {
+                $(this).hide();  // Hide the overlay completely after fading out
+            });
         }
     }
 
@@ -24,17 +25,15 @@ $(document).ready(function() {
         var isControlLink = $(this).hasClass('header-menu-controls-control');
 
         if (hasFolderId || isControlLink) {
-            // If the link has 'data-folder-id' or the specified class, do nothing
-            return; // Do nothing or return after a different logic
+            return; // Allow default behavior for these links
         }
 
-        // Prevent default behavior if no 'data-folder-id' and not a control link
         event.preventDefault();
         var href = $(this).attr('href');
-        $('.overlay').css('opacity', '1');
+        $('.overlay').css('opacity', '1').show();  // Ensure the overlay is visible and set opacity to 1 before redirect
 
         setTimeout(function() {
-            window.location.href = href;
+            window.location.href = href;  // Redirect after a slight delay
         }, 300); // 300 milliseconds = 0.3 seconds
     });
 });
