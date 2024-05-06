@@ -1,23 +1,22 @@
-var pageLoaded = false;
-var timeoutComplete = false;
-
 $(document).ready(function() {
-    checkPageLoad();  // Check if page already loaded, to handle cases where load event fires before JS runs
+    var timeoutComplete = false;
 
     function removePreloader() {
-        if (pageLoaded && timeoutComplete) {
-            $('.overlay').css('opacity', 0).fadeOut(500);  // Fade out the overlay smoothly
+        if (timeoutComplete) {
+            $('.overlay').css('opacity', 0);
+            setTimeout(function() { $('.overlay').hide(); }, 500); // Ensure it hides after fade out
         }
     }
 
+    // Wait for 3 seconds before hiding preloader
     setTimeout(function() {
         timeoutComplete = true;
-        removePreloader();  // Try to remove the preloader
-    }, 3000); // 3000 milliseconds = 3 seconds
+        removePreloader();
+    }, 3000);
 
     $(window).on('load', function() {
-        pageLoaded = true;
-        removePreloader();  // Try to remove the preloader
+        $('.overlay').css('opacity', 0);
+        setTimeout(function() { $('.overlay').hide(); }, 500);
     });
 
     $('a').on('click', function(event) {
@@ -31,21 +30,9 @@ $(document).ready(function() {
         event.preventDefault();
         var href = $(this).attr('href');
 
-        // Prevent further clicks
-        $('a').css('pointer-events', 'none');
-
-        $('.overlay').css('opacity', 1).fadeIn(500, function() {
-            setTimeout(function() {
-                window.location.href = href;  // Redirect after a slight delay
-            }, 300); // 300 milliseconds = 0.3 seconds
-        });
+        $('.overlay').show().css('opacity', 1); // Immediately show and fade in
+        setTimeout(function() {
+            window.location.href = href; // Redirect after fade-in complete
+        }, 500); // Matches transition time
     });
 });
-
-// Check if page has already loaded when the script runs
-function checkPageLoad() {
-    if (document.readyState === 'complete') {
-        pageLoaded = true;
-        removePreloader();
-    }
-}
