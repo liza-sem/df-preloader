@@ -20,23 +20,21 @@ $(document).ready(function() {
         removePreloader();  // Try to remove the preloader
     });
 
-   $('a').on('click', function(event) {
-    var hasFolderId = $(this).attr('data-folder-id');
-    var isControlLink = $(this).hasClass('header-menu-controls-control');
+    $('a').on('click', function(event) {
+        var hasFolderId = $(this).attr('data-folder-id');
+        var isControlLink = $(this).hasClass('header-menu-controls-control');
 
-    if (hasFolderId || isControlLink) {
-        return; // Allow default behavior for these links
-    }
+        if (hasFolderId || isControlLink) {
+            return; // Allow default behavior for these links
+        }
 
-    event.preventDefault();
-    var href = $(this).attr('href');
+        event.preventDefault();
+        var href = $(this).attr('href');
 
-               $('.overlay').animate({ opacity: 1 }, 500, function() {
-                $(this).show(); 
-        setTimeout(function() {
-            window.location.href = href;  // Redirect after a slight delay
-        }, 300); // 300 milliseconds = 0.3 seconds
-    });});
-});
-
+        $('.overlay').animate({ opacity: 1 }, 500, function() {
+            setTimeout(function() {
+                window.location.href = href;  // Redirect after a slight delay
+            }, 300); // 300 milliseconds = 0.3 seconds
+        });
+    });
 });
