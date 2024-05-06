@@ -5,14 +5,14 @@ $(document).ready(function() {
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
             $('.overlay').css('opacity', '0');
-            $('#loading-animation').css('display', 'none');
+            
         }
     }
 
     setTimeout(function() {
         timeoutComplete = true;
         removePreloader();  // Try to remove the preloader
-    }, 3000); // 3000 milliseconds = 3 seconds
+    }, 6000); // 3000 milliseconds = 3 seconds
 
     $(window).on('load', function() {
         pageLoaded = true;
