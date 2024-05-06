@@ -30,7 +30,7 @@ $(document).ready(function() {
 
         event.preventDefault();
         var href = $(this).attr('href');
-        $('.overlay').css('opacity', '1').show();  // Ensure the overlay is visible and set opacity to 1 before redirect
+        $('.overlay').css('opacity', '1').show(500);  // Ensure the overlay is visible and set opacity to 1 before redirect
 
         setTimeout(function() {
             window.location.href = href;  // Redirect after a slight delay
