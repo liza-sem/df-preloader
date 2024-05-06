@@ -1,11 +1,28 @@
 $(document).ready(function() {
-    // Hide the loading overlay once everything is loaded
-    $(window).on('load', function() {
-        $('.overlay').css('opacity', 0);
-        setTimeout(function() { $('.overlay').hide(); }, 500);
-    });
+    var overlayFadedOut = false;
 
-    // When clicking a link, show the exit overlay
+    function fadeOutOverlay() {
+        if (!overlayFadedOut) {
+            $('.overlay').css('opacity', 0);
+            setTimeout(function() { 
+                $('.overlay').hide(); 
+                overlayFadedOut = true; // Ensure this runs only once
+            }, 500);
+        }
+    }
+
+    // Check if the load event has fired by checking readyState
+    function checkLoadState() {
+        if (document.readyState === 'complete') {
+            fadeOutOverlay();
+            clearInterval(loadCheckerInterval); // Clear interval once done
+        }
+    }
+    var loadCheckerInterval = setInterval(checkLoadState, 100);
+
+    $(window).on('load', fadeOutOverlay);
+
+    // Handle click events for links with exit overlay
     $('a').on('click', function(event) {
         var hasFolderId = $(this).attr('data-folder-id');
         var isControlLink = $(this).hasClass('header-menu-controls-control');
@@ -20,7 +37,6 @@ $(document).ready(function() {
         $('.exit-overlay').show().css('opacity', 1);
         setTimeout(function() {
             window.location.href = href; // Redirect after fade-in complete
-        }, 500); // Matches transition time and ensures the overlay is visible for at least half a second
+        }, 500); // Ensure the overlay is visible for at least half a second
     });
 });
-
