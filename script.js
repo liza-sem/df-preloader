@@ -1,12 +1,12 @@
+var pageLoaded = false;
+var timeoutComplete = false;
+
 $(document).ready(function() {
-    var pageLoaded = false;
-    var timeoutComplete = false;
+    checkPageLoad();  // Check if page already loaded, to handle cases where load event fires before JS runs
 
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
-            $('.overlay').animate({ opacity: 0 }, 500, function() {
-                $(this).hide();  // Hide the overlay completely after fading out
-            });
+            $('.overlay').fadeOut(500);  // Fade out the overlay smoothly
         }
     }
 
@@ -30,10 +30,22 @@ $(document).ready(function() {
 
         event.preventDefault();
         var href = $(this).attr('href');
-        $('.overlay').css('opacity', '1').show();  // Ensure the overlay is visible and set opacity to 1 before redirect
 
-        setTimeout(function() {
-            window.location.href = href;  // Redirect after a slight delay
-        }, 300); // 300 milliseconds = 0.3 seconds
+        // Prevent further clicks
+        $('a').css('pointer-events', 'none');
+
+        $('.overlay').css('display', 'block').css('opacity', 0).fadeIn(500, function() {
+            setTimeout(function() {
+                window.location.href = href;  // Redirect after a slight delay
+            }, 300); // 300 milliseconds = 0.3 seconds
+        });
     });
 });
+
+// Check if page has already loaded when the script runs
+function checkPageLoad() {
+    if (document.readyState === 'complete') {
+        pageLoaded = true;
+        removePreloader();
+    }
+}
