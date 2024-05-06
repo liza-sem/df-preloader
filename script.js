@@ -4,7 +4,9 @@ $(document).ready(function() {
 
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
-            $('.overlay').fadeOut(500);  // Fade out the overlay smoothly
+            $('.overlay').animate({ opacity: 0 }, 500, function() {
+                $(this).hide();  // Hide the overlay completely after fading out
+            });
         }
     }
 
@@ -28,14 +30,10 @@ $(document).ready(function() {
 
         event.preventDefault();
         var href = $(this).attr('href');
+        $('.overlay').css('opacity', '1').show();  // Ensure the overlay is visible and set opacity to 1 before redirect
 
-        // Prevent further clicks
-        $('a').css('pointer-events', 'none');
-
-        $('.overlay').fadeIn(500, function() {
-            setTimeout(function() {
-                window.location.href = href;  // Redirect after a slight delay
-            }, 300); // 300 milliseconds = 0.3 seconds
-        });
+        setTimeout(function() {
+            window.location.href = href;  // Redirect after a slight delay
+        }, 300); // 300 milliseconds = 0.3 seconds
     });
 });
