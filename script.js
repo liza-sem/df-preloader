@@ -31,7 +31,7 @@ $(document).ready(function() {
     event.preventDefault();
     var href = $(this).attr('href');
 
-    $('.overlay').css('opacity', '0').fadeIn(300, function() {
+    $('.overlay').css('opacity', '1').fadeIn(300, function() {
         setTimeout(function() {
             window.location.href = href;  // Redirect after a slight delay
         }, 300); // 300 milliseconds = 0.3 seconds
