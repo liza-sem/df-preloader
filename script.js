@@ -1,42 +1,53 @@
 $(document).ready(function() {
-    var overlayFadedOut = false;
+    var timeoutComplete = false;
+    var overlayControlled = false;
 
+    // Function to fade out the overlay
     function fadeOutOverlay() {
-        if (!overlayFadedOut) {
+        if (!overlayControlled) {
             $('.overlay').css('opacity', 0);
-            setTimeout(function() { 
-                $('.overlay').hide(); 
-                overlayFadedOut = true; // Ensure this runs only once
+            setTimeout(function() {
+                $('.overlay').hide();
+                overlayControlled = true;  // Prevent multiple triggers
             }, 500);
         }
     }
 
+    // Set a timeout to ensure the overlay fades out after a maximum wait time
+    setTimeout(function() {
+        timeoutComplete = true;
+        fadeOutOverlay();
+    }, 3000); // 3 seconds max before forcefully fading out
+
     // Check if the load event has fired by checking readyState
-    function checkLoadState() {
-        if (document.readyState === 'complete') {
+    var loadCheckerInterval = setInterval(function() {
+        if (document.readyState === 'complete' && timeoutComplete) {
             fadeOutOverlay();
-            clearInterval(loadCheckerInterval); // Clear interval once done
+            clearInterval(loadCheckerInterval); // Stop the interval when done
         }
-    }
-    var loadCheckerInterval = setInterval(checkLoadState, 100);
+    }, 100);
 
-    $(window).on('load', fadeOutOverlay);
-
-    // Handle click events for links with exit overlay
+    // Handle click events for navigation links
     $('a').on('click', function(event) {
         var hasFolderId = $(this).attr('data-folder-id');
         var isControlLink = $(this).hasClass('header-menu-controls-control');
 
         if (hasFolderId || isControlLink) {
-            return; // Allow default behavior for these links
+            return; // Allow default behavior for these special links
         }
 
         event.preventDefault();
         var href = $(this).attr('href');
 
-        $('.exit-overlay').show().css('opacity', 1);
-        setTimeout(function() {
-            window.location.href = href; // Redirect after fade-in complete
-        }, 500); // Ensure the overlay is visible for at least half a second
+        // Ensure no animation conflicts
+        if (!overlayControlled) {
+            fadeOutOverlay();  // Make sure the overlay fades out if it hasn't yet
+        }
+
+        $('.exit-overlay').css('display', 'block').css('opacity', 0).animate({ opacity: 1 }, 500, function() {
+            setTimeout(function() {
+                window.location.href = href; // Redirect after the exit overlay fades in
+            }, 500);
+        });
     });
 });
