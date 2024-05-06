@@ -34,7 +34,7 @@ $(document).ready(function() {
         // Prevent further clicks
         $('a').css('pointer-events', 'none');
 
-        $('.overlay').css('opacity', '0').show().animate({ opacity: 1 }, 500, function() {
+        $('.overlay').show().animate({ opacity: 1 }, 500, function() {
             setTimeout(function() {
                 window.location.href = href;  // Redirect after a slight delay
             }, 300); // 300 milliseconds = 0.3 seconds
