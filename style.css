@@ -1,1 +1,56 @@
+.overlay, .exit-overlay {
+    display: block;  /* Initially visible */
+    opacity: 1;      /* Start fully opaque */
+    transition: opacity 500ms ease-in-out;  /* Smooth transition for opacity changes */
+    background-color: black; /* Assuming black overlay, adjust as necessary */
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+    right: 0;
+    bottom: 0;
+    z-index: 10000000; /* High z-index to ensure it covers other content */
+}
+
+.exit-overlay {
+    display: none;  /* Initially hidden for exit overlay */
+    opacity: 0;     /* Start fully transparent for exit overlay */
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.loader {
+  animation: blink 1.5s infinite ease;
+}
+
+
+#loading-animation{
+  display: ;
+  position: fixed;
+  top: 0;
+  z-index: 10000000000 !important;
+}
+
+.loader {
+  width: 100px;
+  height: 111px;
+  position: fixed;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  font-family: ;
+  color: #ffffff;
+  font-size: 12px;
+}
+
 
