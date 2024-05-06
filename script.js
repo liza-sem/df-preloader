@@ -20,20 +20,22 @@ $(document).ready(function() {
         removePreloader();  // Try to remove the preloader
     });
 
-    $('a').on('click', function(event) {
-        var hasFolderId = $(this).attr('data-folder-id');
-        var isControlLink = $(this).hasClass('header-menu-controls-control');
+   $('a').on('click', function(event) {
+    var hasFolderId = $(this).attr('data-folder-id');
+    var isControlLink = $(this).hasClass('header-menu-controls-control');
 
-        if (hasFolderId || isControlLink) {
-            return; // Allow default behavior for these links
-        }
+    if (hasFolderId || isControlLink) {
+        return; // Allow default behavior for these links
+    }
 
-        event.preventDefault();
-        var href = $(this).attr('href');
-        $('.overlay').css('opacity', '1').show(500);  // Ensure the overlay is visible and set opacity to 1 before redirect
+    event.preventDefault();
+    var href = $(this).attr('href');
 
+    $('.overlay').css('opacity', '0').fadeIn(300, function() {
         setTimeout(function() {
             window.location.href = href;  // Redirect after a slight delay
         }, 300); // 300 milliseconds = 0.3 seconds
     });
+});
+
 });
