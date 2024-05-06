@@ -12,7 +12,7 @@ $(document).ready(function() {
     setTimeout(function() {
         timeoutComplete = true;
         removePreloader();  // Try to remove the preloader
-    }, 6000); // 3000 milliseconds = 3 seconds
+    }, 3000); // 3000 milliseconds = 3 seconds
 
     $(window).on('load', function() {
         pageLoaded = true;
