@@ -32,7 +32,7 @@ $(document).ready(function() {
         // Prevent further clicks
         $('a').css('pointer-events', 'none');
 
-        $('.overlay').css('display', 'block').css('opacity', 0).fadeIn(500, function() {
+        $('.overlay').fadeIn(500, function() {
             setTimeout(function() {
                 window.location.href = href;  // Redirect after a slight delay
             }, 300); // 300 milliseconds = 0.3 seconds
