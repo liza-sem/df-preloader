@@ -31,11 +31,12 @@ $(document).ready(function() {
     event.preventDefault();
     var href = $(this).attr('href');
 
-    $('.overlay').css('opacity', '1').fadeIn(300, function() {
+               $('.overlay').animate({ opacity: 1 }, 500, function() {
+                $(this).show(); 
         setTimeout(function() {
             window.location.href = href;  // Redirect after a slight delay
         }, 300); // 300 milliseconds = 0.3 seconds
-    });
+    });});
 });
 
 });
