@@ -44,7 +44,7 @@ $(document).ready(function() {
             fadeOutOverlay();  // Make sure the overlay fades out if it hasn't yet
         }
 
-        $('.exit-overlay').css('display', 'block').css('opacity', 0).animate({ opacity: 1 }, 500, function() {
+        $('.exit-overlay').css('display', 'flex').css('opacity', 0).animate({ opacity: 1 }, 500, function() {
             setTimeout(function() {
                 window.location.href = href; // Redirect after the exit overlay fades in
             }, 500);
