@@ -1,6 +1,4 @@
-.overlay, .exit-overlay {
-    display: block;  /* Initially visible */
-    opacity: 1;      /* Start fully opaque */
+.exit-overlay {
     transition: opacity 500ms ease-in-out;  /* Smooth transition for opacity changes */
     background-color: black; /* Assuming black overlay, adjust as necessary */
   position:fixed;
@@ -12,9 +10,13 @@
     bottom: 0;
     z-index: 10000000; /* High z-index to ensure it covers other content */
 }
+  .overlay{
+
+    opacity: 1; 
+  }
 
 .exit-overlay {
-    display: none;  /* Initially hidden for exit overlay */
+ /* Initially hidden for exit overlay */
     opacity: 0;     /* Start fully transparent for exit overlay */
 }
 
@@ -52,5 +54,3 @@
   color: #ffffff;
   font-size: 12px;
 }
-
-
