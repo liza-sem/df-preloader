@@ -6,7 +6,7 @@ $(document).ready(function() {
 
     function removePreloader() {
         if (pageLoaded && timeoutComplete) {
-            $('.overlay').fadeOut(500);  // Fade out the overlay smoothly
+            $('.overlay').css('opacity', 0).fadeOut(500);  // Fade out the overlay smoothly
         }
     }
 
@@ -34,7 +34,7 @@ $(document).ready(function() {
         // Prevent further clicks
         $('a').css('pointer-events', 'none');
 
-        $('.overlay').css('display', 'block').css('opacity', 0).fadeIn(500, function() {
+        $('.overlay').css('opacity', 1).fadeIn(500, function() {
             setTimeout(function() {
                 window.location.href = href;  // Redirect after a slight delay
             }, 300); // 300 milliseconds = 0.3 seconds
