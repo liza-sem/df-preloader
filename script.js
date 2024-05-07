@@ -2,7 +2,6 @@ $(document).ready(function() {
     var timeoutComplete = false;
     var overlayControlled = false;
 
-    // Function to fade out the overlay
     function fadeOutOverlay() {
         if (!overlayControlled) {
             $('.overlay').css('opacity', 0);
@@ -13,8 +12,15 @@ $(document).ready(function() {
         }
     }
 
-    // Initially hide the exit overlay on every page load
-    $('.exit-overlay').hide().css('opacity', 0);
+    function resetOverlays() {
+        $('.exit-overlay').hide().css('opacity', 0);
+        if (!overlayControlled) {
+            fadeOutOverlay();
+        }
+    }
+
+    // Initially hide the exit overlay and control the main overlay
+    resetOverlays();
 
     // Set a timeout to ensure the overlay fades out after a maximum wait time
     setTimeout(function() {
@@ -22,12 +28,17 @@ $(document).ready(function() {
         fadeOutOverlay();
     }, 3000); // 3 seconds max before forcefully fading out
 
-    // Handle the 'pageshow' event to manage overlay visibility when coming from cache
+    // Check for the page becoming visible again, such as navigating back to it
+    document.addEventListener('visibilitychange', function() {
+        if (document.visibilityState === 'visible') {
+            resetOverlays();
+        }
+    });
+
     $(window).on('pageshow', function(event) {
         if (event.originalEvent.persisted) {
-            // The page was loaded from the cache, ensure overlays are reset
-            $('.exit-overlay').hide().css('opacity', 0);
-            fadeOutOverlay();  // Also ensure main overlay is controlled properly
+            // The page was loaded from the cache
+            resetOverlays();
         }
     });
 
@@ -35,7 +46,7 @@ $(document).ready(function() {
     $('a').on('click', function(event) {
         var hasFolderId = $(this).attr('data-folder-id');
         var isControlLink = $(this).hasClass('header-menu-controls-control');
-        var allowedHrefs = ['#', '#!', '#void', 'javascript:void(0)'];  // Array of allowed hrefs
+        var allowedHrefs = ['#', '#!', '#void', 'javascript:void(0)'];
 
         if (hasFolderId || isControlLink || allowedHrefs.includes($(this).attr('href'))) {
             return;
@@ -44,14 +55,9 @@ $(document).ready(function() {
         event.preventDefault();
         var href = $(this).attr('href');
 
-        // Ensure no animation conflicts
-        if (!overlayControlled) {
-            fadeOutOverlay();
-        }
-
         $('.exit-overlay').css('display', 'flex').css('opacity', 0).animate({ opacity: 1 }, 500, function() {
             setTimeout(function() {
-                window.location.href = href; // Redirect after the exit overlay fades in
+                window.location.href = href;
             }, 500);
         });
     });
