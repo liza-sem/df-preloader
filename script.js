@@ -47,8 +47,9 @@ $(document).ready(function() {
         var hasFolderId = $(this).attr('data-folder-id');
         var isControlLink = $(this).hasClass('header-menu-controls-control');
         var allowedHrefs = ['#', '#!', '#void', 'javascript:void(0)'];
+        var targetBlank = $(this).attr('target') === '_blank';
 
-        if (hasFolderId || isControlLink || allowedHrefs.includes($(this).attr('href'))) {
+        if (hasFolderId || isControlLink || allowedHrefs.includes($(this).attr('href')) || targetBlank) {
             return;
         }
 
