@@ -1,6 +1,6 @@
 .exit-overlay {
     transition: opacity 500ms ease-in-out;  /* Smooth transition for opacity changes */
-    background-color: black; /* Assuming black overlay, adjust as necessary */
+    background-color: white; /* Assuming black overlay, adjust as necessary */
   position:fixed;
   top:0;
   left:0;
@@ -51,6 +51,6 @@
   top: 0;
   bottom: 0;
   font-family: ;
-  color: #ffffff;
+  color: black;
   font-size: 12px;
 }
