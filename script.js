@@ -48,13 +48,15 @@ $(document).ready(function() {
         var isControlLink = $(this).hasClass('header-menu-controls-control');
         var allowedHrefs = ['#', '#!', '#void', 'javascript:void(0)'];
         var targetBlank = $(this).attr('target') === '_blank';
+        var href = $(this).attr('href');
+        var isButtonRole = $(this).attr('role') === 'button';
 
-        if (hasFolderId || isControlLink || allowedHrefs.includes($(this).attr('href')) || targetBlank) {
+        // Allow any href that starts with # or if role is button with no href
+        if (hasFolderId || isControlLink || allowedHrefs.includes(href) || targetBlank || /^#/.test(href) || (!href && isButtonRole)) {
             return;
         }
 
         event.preventDefault();
-        var href = $(this).attr('href');
 
         $('.exit-overlay').css('display', 'flex').css('opacity', 0).animate({ opacity: 1 }, 500, function() {
             setTimeout(function() {
