@@ -50,9 +50,10 @@ $(document).ready(function() {
         var targetBlank = $(this).attr('target') === '_blank';
         var href = $(this).attr('href');
         var isButtonRole = $(this).attr('role') === 'button';
+        var isPresentationRole = $(this).attr('role') === 'presentation';
 
         // Allow any href that starts with # or if role is button with no href
-        if (hasFolderId || isControlLink || allowedHrefs.includes(href) || targetBlank || /^#/.test(href) || (!href && isButtonRole)) {
+        if (hasFolderId || isControlLink || allowedHrefs.includes(href) || targetBlank || /^#/.test(href) || !href || (!href && isButtonRole)) {
             return;
         }
 
